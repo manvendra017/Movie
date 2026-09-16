@@ -1,1 +1,335 @@
 # Movie
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>An Invitation</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Cardo:ital@0;1&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ivory: #FBF6ED;
+    --ivory-deep: #F3EAD9;
+    --maroon: #6E1423;
+    --maroon-deep: #4A0E18;
+    --gold: #B8902F;
+    --gold-soft: #D8BB74;
+    --ink: #2A211C;
+    --line: rgba(110, 20, 35, 0.25);
+  }
+
+  :root:not([data-theme="light"]) {
+    @media (prefers-color-scheme: dark) {
+      --ivory: #1B1613;
+      --ivory-deep: #241C18;
+      --maroon: #D8BB74;
+      --maroon-deep: #E8CE93;
+      --gold: #D8BB74;
+      --gold-soft: #E8CE93;
+      --ink: #F3EAD9;
+      --line: rgba(216, 187, 116, 0.3);
+    }
+  }
+
+  :root[data-theme="dark"] {
+    --ivory: #1B1613;
+    --ivory-deep: #241C18;
+    --maroon: #D8BB74;
+    --maroon-deep: #E8CE93;
+    --gold: #D8BB74;
+    --gold-soft: #E8CE93;
+    --ink: #F3EAD9;
+    --line: rgba(216, 187, 116, 0.3);
+  }
+
+  * { box-sizing: border-box; }
+
+  html, body {
+    margin: 0;
+    padding: 0;
+    min-height: 100%;
+  }
+
+  body {
+    background: radial-gradient(ellipse at top, var(--ivory-deep), var(--ivory) 60%);
+    color: var(--ink);
+    font-family: 'Cardo', serif;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    padding: 32px 16px;
+    position: relative;
+    overflow-x: hidden;
+  }
+
+  .frame {
+    position: relative;
+    width: 100%;
+    max-width: 480px;
+    background: var(--ivory);
+    border: 1px solid var(--line);
+    padding: 56px 40px 48px;
+    text-align: center;
+    box-shadow: 0 30px 80px -30px rgba(74, 14, 24, 0.35);
+  }
+
+  .frame::before {
+    content: "";
+    position: absolute;
+    inset: 10px;
+    border: 1px solid var(--line);
+    pointer-events: none;
+  }
+
+  .kicker {
+    font-family: 'Cardo', serif;
+    font-style: italic;
+    font-size: 15px;
+    letter-spacing: 0.04em;
+    color: var(--maroon);
+    margin: 0 0 6px;
+  }
+
+  .ornament {
+    width: 64px;
+    height: 1px;
+    background: var(--gold);
+    margin: 18px auto 22px;
+    position: relative;
+  }
+  .ornament::before {
+    content: "❀";
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    background: var(--ivory);
+    color: var(--gold);
+    font-size: 13px;
+    padding: 0 8px;
+  }
+
+  h1 {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 500;
+    font-size: clamp(30px, 6vw, 40px);
+    line-height: 1.25;
+    margin: 0 0 4px;
+    color: var(--maroon-deep);
+  }
+
+  h1 em {
+    font-style: italic;
+    font-weight: 600;
+  }
+
+  .subtitle {
+    font-size: 17px;
+    line-height: 1.7;
+    color: var(--ink);
+    opacity: 0.85;
+    max-width: 34ch;
+    margin: 18px auto 8px;
+  }
+
+  .details {
+    margin: 26px auto 30px;
+    display: inline-flex;
+    flex-direction: column;
+    gap: 6px;
+    font-size: 15px;
+    letter-spacing: 0.02em;
+    color: var(--maroon);
+  }
+
+  .details span.label {
+    font-style: italic;
+    color: var(--ink);
+    opacity: 0.65;
+    margin-right: 6px;
+  }
+
+  .actions {
+    margin-top: 34px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 22px;
+    flex-wrap: wrap;
+    position: relative;
+    min-height: 64px;
+  }
+
+  button {
+    font-family: 'Cardo', serif;
+    cursor: pointer;
+    border-radius: 2px;
+  }
+
+  .yes-btn {
+    background: var(--maroon);
+    color: var(--ivory);
+    border: 1px solid var(--maroon);
+    padding: 14px 38px;
+    font-size: 17px;
+    letter-spacing: 0.03em;
+    transition: transform 0.25s ease, background 0.25s ease, box-shadow 0.25s ease;
+    box-shadow: 0 10px 24px -10px rgba(74, 14, 24, 0.5);
+  }
+
+  .yes-btn:hover {
+    background: var(--maroon-deep);
+    transform: translateY(-2px);
+    box-shadow: 0 14px 28px -10px rgba(74, 14, 24, 0.55);
+  }
+
+  .yes-btn:active {
+    transform: translateY(0px) scale(0.98);
+  }
+
+  .no-btn {
+    background: transparent;
+    color: var(--ink);
+    opacity: 0.55;
+    border: 1px solid var(--line);
+    padding: 14px 30px;
+    font-size: 16px;
+    position: relative;
+    transition: opacity 0.2s ease;
+  }
+
+  .no-btn:hover {
+    opacity: 0.75;
+  }
+
+  .footnote {
+    margin-top: 30px;
+    font-size: 13px;
+    font-style: italic;
+    color: var(--maroon);
+    opacity: 0;
+    transition: opacity 0.4s ease;
+    min-height: 18px;
+  }
+
+  .footnote.show {
+    opacity: 0.75;
+  }
+
+  .confirmed {
+    display: none;
+  }
+
+  .confirmed.show {
+    display: block;
+    animation: reveal 0.6s ease both;
+  }
+
+  @keyframes reveal {
+    from { opacity: 0; transform: translateY(8px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .confirmed h2 {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 500;
+    font-size: 30px;
+    color: var(--maroon-deep);
+    margin: 0 0 10px;
+  }
+
+  .confirmed p {
+    font-size: 16px;
+    line-height: 1.7;
+    opacity: 0.85;
+    margin: 0;
+  }
+
+  .pre-confirm.hide {
+    display: none;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    * { transition: none !important; animation: none !important; }
+  }
+</style>
+</head>
+<body>
+
+<div class="frame">
+  <div class="pre-confirm" id="preConfirm">
+    <p class="kicker">A small request</p>
+    <div class="ornament"></div>
+    <h1>Will you watch<br><em>Hum Aapke Hain Koun..!</em><br>with me?</h1>
+    <p class="subtitle">A morning show, just the two of us — before the day gets loud.</p>
+
+    <div class="details">
+      <div><span class="label">Film</span>Hum Aapke Hain Koun..!</div>
+      <div><span class="label">Show</span>8:00 AM</div>
+      <div><span class="label">Company</span>Just you and me</div>
+    </div>
+
+    <div class="actions">
+      <button class="yes-btn" id="yesBtn">Yes, I'll come</button>
+      <button class="no-btn" id="noBtn">No</button>
+    </div>
+
+    <p class="footnote" id="footnote">that one wasn't really an option</p>
+  </div>
+
+  <div class="confirmed" id="confirmed">
+    <p class="kicker">Booked</p>
+    <div class="ornament"></div>
+    <h2>See you at 8, then.</h2>
+    <p>Save your Sunday best — the 8 AM show is ours.</p>
+  </div>
+</div>
+
+<script>
+  const noBtn = document.getElementById('noBtn');
+  const yesBtn = document.getElementById('yesBtn');
+  const footnote = document.getElementById('footnote');
+  const preConfirm = document.getElementById('preConfirm');
+  const confirmed = document.getElementById('confirmed');
+  const actions = document.querySelector('.actions');
+
+  let dodges = 0;
+
+  function dodge() {
+    dodges += 1;
+    const maxX = Math.max(actions.clientWidth - noBtn.offsetWidth - 20, 40);
+    const maxY = Math.max(actions.clientHeight - noBtn.offsetHeight - 10, 10);
+    const x = (Math.random() - 0.5) * maxX;
+    const y = (Math.random() - 0.5) * maxY;
+    noBtn.style.position = 'relative';
+    noBtn.style.left = x + 'px';
+    noBtn.style.top = y + 'px';
+    footnote.classList.add('show');
+    if (dodges > 4) {
+      noBtn.style.opacity = '0.15';
+      noBtn.style.pointerEvents = 'none';
+      footnote.textContent = "some questions only have one answer";
+    }
+  }
+
+  noBtn.addEventListener('mouseenter', dodge);
+  noBtn.addEventListener('touchstart', function (e) {
+    e.preventDefault();
+    dodge();
+  }, { passive: false });
+  noBtn.addEventListener('click', function (e) {
+    e.preventDefault();
+    dodge();
+  });
+
+  yesBtn.addEventListener('click', function () {
+    preConfirm.classList.add('hide');
+    confirmed.classList.add('show');
+  });
+</script>
+
+</body>
+</html>
